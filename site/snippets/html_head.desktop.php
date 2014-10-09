@@ -98,8 +98,9 @@ if(!isset($prefetch)): $prefetch = false; endif;
 	<?php if($site->find('blog/feed')): ?><link rel="alternate" type="application/rss+xml" title="<?php echo smartypants(titlecase($site->find('blog/feed')->title())); ?>" href="<?php echo html(url('blog/feed')); ?>"><?php endif; ?>
 	<?php if($site->google_plus() != ''): ?><link rel="publisher" href="https://plus.google.com/xxxxxxxxxxxxxxxxxxxxx"><?php endif; ?>
 
-	<?php // Canonical rel link on pages that can be dynamic (e.g. …/tags:category-name); check is on 'tags' field, change or add based on project specifics ?>
-	<?php foreach($page->children()->visible() as $child_page): if($child_page->tags() && !param()): ?><link rel="canonical" href="<?php echo $page->url($language_code); ?>"><?php break; endif; endforeach; ?>
+	<?php // Canonical rel link on pages that can be dynamic (e.g. …/paramkey:paramvalue); by default the script checks if the 'tags' field is present; make sure to change or add field names based on project specifics! ?>
+	<?php foreach($page->children()->visible() as $child_page): if($child_page->tags() && (!param() || is_numeric(param(key(param()))))): ?><link rel="canonical" href="<?php if(is_numeric(param(key(param())))): echo $page->url() . '/page:' . param('page'); else: echo $page->url(); endif; ?>"><?php break; endif; endforeach; ?>
+	<?php foreach($page->siblings($self = true)->visible() as $sibling_page): if($sibling_page->tags() && !$page->isHomePage() && !param()): ?><link rel="canonical" href="<?php echo $page->url(); ?>"><?php break; endif; endforeach; ?>
 
 	<?php // Alternate language rel link(s) for matching languages in config and available text files (e.g. blogarticle.md, blogarticle.en.md) ?>
 	<?php foreach($site->languages() as $language): if($site->languages()->count() > 1 && $site->language() != $language && isset($page->inventory()['content'][$language->code()])): ?><link rel="alternate" href="<?php echo $page->url($language->code()); ?>" hreflang="<?php echo $language->locale(); ?>"><?php endif; endforeach;?>
