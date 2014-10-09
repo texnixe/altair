@@ -6,8 +6,8 @@
 // If there is a param in the url
 if(param()) {
 
-	// Get the first key of the param array, but when the first key in url is `category` (singular), make sure to use `categrories` (plural; used in the text files) as the key value!
-	$paramkey = (key(param()) == 'category') ? 'categories' : key(param());
+	// Get the first key of the param array, but when the first key in url is `tag` (singular), make sure to use `tags` (plural; used in the text files) as the key value!
+	$paramkey = (key(param()) == 'tag') ? 'tags' : key(param());
 
 	// Unslug the param to a tag
 	$paramvalue = tagunslug(param(key(param())));
