@@ -102,7 +102,7 @@ if(!isset($prefetch)): $prefetch = false; endif;
 	<?php foreach($page->children()->visible() as $child_page): if($child_page->tags() && !param()): ?><link rel="canonical" href="<?php echo $page->url($language_code); ?>"><?php break; endif; endforeach; ?>
 
 	<?php // Alternate language rel link(s) for matching languages in config and available text files (e.g. blogarticle.md, blogarticle.en.md) ?>
-	<?php foreach($site->languages() as $language): if($site->languages()->count() > 1 && $site->language() != $language && $page->inventory()['content'][$language->code()]): ?><link rel="alternate" href="<?php echo $page->url($language->code()); ?>" hreflang="<?php echo $language->locale(); ?>"><?php endif; endforeach; ?>
+	<?php foreach($site->languages() as $language): if($site->languages()->count() > 1 && $site->language() != $language && isset($page->inventory()['content'][$language->code()])): ?><link rel="alternate" href="<?php echo $page->url($language->code()); ?>" hreflang="<?php echo $language->locale(); ?>"><?php endif; endforeach;?>
 
 	<?php // Shortlink (to use enable tinyurl in config.php) ?>
 	<?php if(c::get('tinyurl.enabled') && !$page->isHomepage()): ?><link rel="shortlink" href="<?php echo $page->tinyurl(); ?>"><?php endif; ?>
