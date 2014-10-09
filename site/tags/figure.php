@@ -86,10 +86,17 @@ kirbytext::$tags['figure'] = array(
 			$gridclass = ' Grid Grid--withGutterPercentage';
 			$itemgridclass = 'Grid-cell ';
 		}
+		else {
+			$gridclass = '';
+			$itemgridclass = '';
+		}
 		$itemclassprefix = $itemgridclass . 'FigureImage'; // If more than one image, Grid-cell is prepended
 
 		if(isset($align)) {
 			$alignclass = ' FigureImage--align'.ucfirst($align); // add capitalized align class (IE: Grid--alignCenter)
+		}
+		else {
+			$alignclass = '';
 		}
 
 		$figure = new Brick('figure');
