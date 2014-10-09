@@ -10,13 +10,13 @@ if(param()) {
 	$paramkey = (key(param()) == 'category') ? 'categories' : key(param());
 
 	// Unslug the param to a tag
-	$tag = tagunslug(param(key(param())));
+	$paramvalue = tagunslug(param(key(param())));
 
 	// Save param and tag for use in URL
 	$paramURL = key(param()) . ':' . param(key(param()));
 
 	// Filter projects by param
-	$pageItems = $page->siblings()->visible()->filterBy($paramkey, ($tag), ',')->flip();
+	$pageItems = $page->siblings()->visible()->filterBy($paramkey, ($paramvalue), ',')->flip();
 
 	$lookupPage = [];
 	$i = 0;
@@ -50,12 +50,12 @@ if(param()) {
 // There is no param in the url
 else {
 	$hasPrev = $page->hasPrevVisible();
-	$prevTitle = $page->prevVisible()->title();
-	$prevURL = $page->prevVisible()->url();
+	$prevTitle = ($page->hasPrevVisible()) ? $page->prevVisible()->title() : false;
+	$prevURL = ($page->hasPrevVisible()) ? $page->prevVisible()->url() : false;
 
 	$hasNext = $page->hasNextVisible();
-	$nextTitle = $page->nextVisible()->title();
-	$nextURL = $page->nextVisible()->url();
+	$nextTitle = ($page->hasNextVisible()) ? $page->nextVisible()->title() : false;
+	$nextURL = ($page->hasNextVisible()) ? $page->nextVisible()->url() : false;
 }
 ////////////////////////////////////////////////////////// ?>
 
